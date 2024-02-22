@@ -5,6 +5,8 @@ import { ChatSuggestionsComponent } from '../../components/chat-suggestions/chat
 import { CommonModule } from '@angular/common';
 import { Message } from '../../types/message.type';
 import { ChatDialogComponent } from '../../components/chat-dialog/chat-dialog.component';
+import { MessageService } from '../../services/message.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-chat',
@@ -14,20 +16,56 @@ import { ChatDialogComponent } from '../../components/chat-dialog/chat-dialog.co
     MuseuComponent,
     ArrowLeftComponent,
     ChatSuggestionsComponent,
-    ChatDialogComponent
-   
+    ChatDialogComponent,  
+    HttpClientModule
+  ],
+
+  providers:[
+    HttpClientModule,
+    MessageService
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
 export class ChatComponent {
 
-  messages : Message []= []
+  constructor(private service : MessageService){
+
+  }
+  messages : Message []= JSON.parse(localStorage.getItem("messages")??"[]")
+
+  updateLocalStorage(){
+
+    localStorage.setItem("messages" , JSON.stringify(this.messages))
+
+  }
 
   sendSuggetedQuestion(question: String){
 
     this.messages.push({type: 'request' , message: question
   
   })
+
+  this.updateLocalStorage()
+  this.sendMessage(question)
+
+ 
+  
+  }
+
+  sendMessage(message:String){
+
+    this.service.send(message).subscribe({
+     
+      next: (body)=>{
+
+        this.messages.push({
+          type:"response",
+          message: body.response
+
+        })
+      }
+    })
   }
 }
+
