@@ -2,43 +2,32 @@ import { Component } from '@angular/core';
 import { MuseuComponent } from '../../icons/museu/museu.component';
 import { ArrowLeftComponent } from '../../icons/arrow-left/arrow-left.component';
 import { ChatSuggestionsComponent } from '../../components/chat-suggestions/chat-suggestions.component';
+import { CommonModule } from '@angular/common';
+import { Message } from '../../types/message.type';
+import { ChatDialogComponent } from '../../components/chat-dialog/chat-dialog.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
   imports: [
-
+    CommonModule,
     MuseuComponent,
     ArrowLeftComponent,
-    ChatSuggestionsComponent
+    ChatSuggestionsComponent,
+    ChatDialogComponent
+   
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
 export class ChatComponent {
 
-  initialQuestions:  string[] = [
+  messages : Message []= []
 
-    "Qual o valor para entrar no museu?",
-    "Quand o museu está aberto ?"
-    
-  ]
+  sendSuggetedQuestion(question: String){
 
-
-  initialCuriosity:  string[] = [
-
-    "Quem era o prefeito na época da criação ?",
-    "Quantos cômodos existem no  museu  ?",
-    "Quantas peças estão exibidas no  museu  ?"
-    
-  ]
-
-  initialHistory:  string[] = [
-
-    "Quando o museu foi criado  ?",
-    "Qual é o estilo arquitetônico do prédio ?",
-    "Quem foi o arquiteto  do prédio?"
-    
-  ]
-
+    this.messages.push({type: 'request' , message: question
+  
+  })
+  }
 }
