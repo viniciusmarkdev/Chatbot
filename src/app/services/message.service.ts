@@ -8,7 +8,7 @@ import { MessageResponse } from '../types/message-response.type';
 })
 export class MessageService {
 
-  private   endpointUrl = 'https://jdzrrnv67dcnspexppkqyugwli0iaykg.lambda-url.us.east-1.on.aws/'
+  private   endpointUrl = 'http://localhost:8080/api/chat'
 
   constructor(private http : HttpClient) { }
 
