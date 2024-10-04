@@ -6,16 +6,20 @@ import { Message } from '../../types/message.type';
 import { MessageService } from '../../services/message.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ChatSuggestionsComponent } from '../../components/chat-suggestions/chat-suggestions.component';
+import { ChatDialogComponent } from '../../components/chat-dialog/chat-dialog.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
   imports: [
+
     CommonModule,
     MuseuComponent,
     ArrowLeftComponent,
     HttpClientModule,
-    ChatSuggestionsComponent
+    ChatSuggestionsComponent,
+    ChatDialogComponent
+    
   ],
 
   providers:[
@@ -27,10 +31,16 @@ import { ChatSuggestionsComponent } from '../../components/chat-suggestions/chat
 })
 export class ChatComponent {
 
+
+  messages: Message[] = [];
+
   constructor(private service : MessageService){
 
   }
-  messages : Message []= JSON.parse(localStorage.getItem("messages")??"[]")
+
+ 
+
+  
 
   updateLocalStorage(){
 
@@ -38,18 +48,18 @@ export class ChatComponent {
 
   }
 
-  sendSuggetedQuestion(question: String){
 
-    this.messages.push({type: 'request' , message: question
-  
-  })
+  sendNewMessage(question: string){
+    
+    this.messages.push({
+      type: 'request',
+      message: question
+    })
 
-  this.updateLocalStorage()
-  this.sendMessage(question)
-
- 
-  
+    this.updateLocalStorage()
+    this.sendMessage(question)
   }
+
 
   sendMessage(message:String){
 

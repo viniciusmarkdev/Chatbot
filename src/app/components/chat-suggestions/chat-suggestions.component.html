@@ -8,7 +8,9 @@
         </div>
         <ul class="suggestion-list">
             <li 
+            
             *ngFor="let question of suggestionTopic.questions"
+            (click) = "selectQuestion(question)"
             
         >
             {{ question }}

@@ -18,6 +18,7 @@ import { HistoryComponent } from '../../icons/history/history.component';
   styleUrl: './chat-suggestions.component.scss'
 })
 export class ChatSuggestionsComponent {
+
   @Output() questionSelected =  new EventEmitter<string>();
 
   suggestionTopics = [
@@ -51,6 +52,7 @@ export class ChatSuggestionsComponent {
   ]
 
   selectQuestion(value: string){
+    
     this.questionSelected.emit(value)
   }
 }
